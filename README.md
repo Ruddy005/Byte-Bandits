@@ -1,4 +1,3 @@
-Byte Bandits.cpp
 # Snake Game 
 1. Arrays (Fixed-size Data Structure)
   Snake Body Storage: 
