@@ -4,6 +4,7 @@
 #include <fstream>
 #include <ctime>
 #include <cstdlib>
+#include <vector>
 
 using namespace std;
 
@@ -39,7 +40,8 @@ public:
 class Snake {
 public:
     int x, y;
-    int tailX[150], tailY[150];
+    vector<int> tailX;
+    vector<int> tailY;
     int nTail;
     int score;
     bool gameover;
@@ -59,10 +61,13 @@ public:
         y = height / 2;
         score = 0;
         nTail = 2;
-        tailX[0] = x - 1;
-        tailY[0] = y;
-        tailX[1] = x - 2;
-        tailY[1] = y;
+        tailX.clear();
+        tailY.clear();
+        tailX.push_back(x-1);
+        tailY.push_back(y);
+        tailX.push_back(x-2);
+        tailY.push_back(y);
+        
         numObstacles = 3;
         GenerateObstacles();
     }
@@ -119,6 +124,8 @@ public:
             food.Generate();
             GenerateObstacles();
             nTail++;
+            tailX.push_back(tailX.back());
+            tailY.push_back(tailX.back());
         }
         if (score > highscore) {
             highscore = score;
@@ -129,7 +136,7 @@ public:
 
 void Draw(Snake& snake, Food& food) {
     system("cls");
-    for (int i = 0; i < width + 1; i++) cout << "#";
+    for (int i = 0; i < width; i++) cout << "#";
     cout << endl;
 
     for (int i = 0; i < height; i++) {
@@ -157,7 +164,7 @@ void Draw(Snake& snake, Food& food) {
         }
         cout << endl;
     }
-    for (int i = 0; i < width + 1; i++) cout << "#";
+    for (int i = 0; i < width; i++) cout << "#";
     cout << "\nSCORE: " << snake.score << "\nHIGH SCORE: " << highscore << endl;
 }
 
